@@ -1,0 +1,2 @@
+ proxy=http://kukapalv:ADPadp616@11.164.4.21:8080
+ rejectUnauthorized=false
