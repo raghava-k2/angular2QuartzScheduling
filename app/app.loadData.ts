@@ -12,8 +12,6 @@ export class LoadData {
     getJobDetails() {
         let params = new URLSearchParams();
         params.set("jobName", "vijay");
-        this.http.get('http://hyrdlt1118.es.ad.adp.com:9080/GLIquartz/do/getjobdetails', {search: params}).subscribe((response)=> {
-            console.log(response);
-        });
+        return this.http.get('http://hyrdlt1118.es.ad.adp.com:9080/GLIquartz/do/getjobdetails', {search: params});
     }
 }

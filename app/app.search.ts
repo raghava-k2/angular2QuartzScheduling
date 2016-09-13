@@ -1,7 +1,8 @@
+///<reference path="../node_modules/rxjs/Observable.d.ts"/>
 /**
  * Created by kukapalv on 9/12/2016.
  */
-import {Component, Inject} from '@angular/core';
+import {Component, Inject, Input} from '@angular/core';
 import {LoadData} from "./app.loadData";
 @Component({
     selector: 'client-search',
@@ -17,12 +18,17 @@ import {LoadData} from "./app.loadData";
 }`]
 })
 export class AppSearch {
+    localData:string;
     constructor(public jobService: LoadData) {
         console.log("inside search constructor");
+        this.localData="raghava";
     }
 
     getAllJobDetails() {
         console.log('inside search click event');
-        console.log(this.jobService.getJobDetails());
+        this.jobService.getJobDetails().subscribe((response)=> {
+            console.log(response.json());
+        });
+        console.log("after search method");
     }
 }

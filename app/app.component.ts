@@ -1,8 +1,7 @@
 /**
  * Created by kukapalv on 9/9/2016.
  */
-import {Component} from '@angular/core';
-import {AppSearch} from './app.search'
+import {Component} from "@angular/core";
 @Component({
     selector: 'display',
     template: `<client-search></client-search>`,

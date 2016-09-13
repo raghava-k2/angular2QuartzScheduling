@@ -17,14 +17,15 @@ var forms_1 = require("@angular/forms");
 var app_component_1 = require("./app.component");
 var app_search_1 = require("./app.search");
 var http_1 = require("@angular/http");
+var app_grid_component_1 = require("./app.grid.component");
 var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
             imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, http_1.HttpModule],
-            declarations: [app_component_1.DisplayComponent, app_search_1.AppSearch],
-            bootstrap: [app_component_1.DisplayComponent, app_search_1.AppSearch]
+            declarations: [app_component_1.DisplayComponent, app_search_1.AppSearch, app_grid_component_1.Ng2Grid],
+            bootstrap: [app_component_1.DisplayComponent]
         }), 
         __metadata('design:paramtypes', [])
     ], AppModule);

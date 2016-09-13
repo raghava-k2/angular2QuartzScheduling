@@ -8,6 +8,7 @@ var __decorate = (this && this.__decorate) || function (decorators, target, key,
 var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
+///<reference path="../node_modules/rxjs/Observable.d.ts"/>
 /**
  * Created by kukapalv on 9/12/2016.
  */
@@ -17,10 +18,14 @@ var AppSearch = (function () {
     function AppSearch(jobService) {
         this.jobService = jobService;
         console.log("inside search constructor");
+        this.localData = "raghava";
     }
     AppSearch.prototype.getAllJobDetails = function () {
         console.log('inside search click event');
-        console.log(this.jobService.getJobDetails());
+        this.jobService.getJobDetails().subscribe(function (response) {
+            console.log(response.json());
+        });
+        console.log("after search method");
     };
     AppSearch = __decorate([
         core_1.Component({

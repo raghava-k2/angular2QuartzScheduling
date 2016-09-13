@@ -11,7 +11,7 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 /**
  * Created by kukapalv on 9/9/2016.
  */
-var core_1 = require('@angular/core');
+var core_1 = require("@angular/core");
 var DisplayComponent = (function () {
     function DisplayComponent() {
         this.value = "raghava";
