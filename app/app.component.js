@@ -20,7 +20,7 @@ var DisplayComponent = (function () {
     DisplayComponent = __decorate([
         core_1.Component({
             selector: 'display',
-            template: "\n<input type=\"text\" placeholder=\"Enter Value\" [(ngModel)]=\"value\">\n<h1>Angular author name:{{value}}</h1>",
+            template: "<client-search></client-search>",
             styles: ["h1 {\n  color: #369;\n  font-family: Arial, Helvetica, sans-serif;\n  font-size: 250%;\n}\nh2, h3 {\n  color: #444;\n  font-family: Arial, Helvetica, sans-serif;\n  font-weight: lighter;\n}\nbody {\n  margin: 2em;\n}"]
         }), 
         __metadata('design:paramtypes', [])

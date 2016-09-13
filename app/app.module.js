@@ -11,18 +11,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 /**
  * Created by kukapalv on 9/9/2016.
  */
-var core_1 = require('@angular/core');
-var platform_browser_1 = require('@angular/platform-browser');
-var forms_1 = require('@angular/forms');
-var app_component_1 = require('./app.component');
+var core_1 = require("@angular/core");
+var platform_browser_1 = require("@angular/platform-browser");
+var forms_1 = require("@angular/forms");
+var app_component_1 = require("./app.component");
+var app_search_1 = require("./app.search");
+var http_1 = require("@angular/http");
 var AppModule = (function () {
     function AppModule() {
     }
     AppModule = __decorate([
         core_1.NgModule({
-            imports: [platform_browser_1.BrowserModule, forms_1.FormsModule],
-            declarations: [app_component_1.DisplayComponent],
-            bootstrap: [app_component_1.DisplayComponent]
+            imports: [platform_browser_1.BrowserModule, forms_1.FormsModule, http_1.HttpModule],
+            declarations: [app_component_1.DisplayComponent, app_search_1.AppSearch],
+            bootstrap: [app_component_1.DisplayComponent, app_search_1.AppSearch]
         }), 
         __metadata('design:paramtypes', [])
     ], AppModule);

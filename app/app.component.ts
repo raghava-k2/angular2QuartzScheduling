@@ -2,11 +2,10 @@
  * Created by kukapalv on 9/9/2016.
  */
 import {Component} from '@angular/core';
+import {AppSearch} from './app.search'
 @Component({
     selector: 'display',
-    template: `
-<input type="text" placeholder="Enter Value" [(ngModel)]="value">
-<h1>Angular author name:{{value}}</h1>`,
+    template: `<client-search></client-search>`,
     styles: [`h1 {
   color: #369;
   font-family: Arial, Helvetica, sans-serif;
