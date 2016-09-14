@@ -12,15 +12,27 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Created by kukapalv on 9/13/2016.
  */
 var core_1 = require("@angular/core");
+var app_constant_1 = require("./app.constant");
 var Ng2Grid = (function () {
     function Ng2Grid() {
-        this.cdata = ['ID', 'Name'];
-        this.rdata = [{ "id": 1, "userName": "raghava" }];
-        this.rows = [10, 20, 30, 40, 50];
+        this.cdata = app_constant_1.default.GRID_HEADERS;
+        this.cLength = this.cdata.length + 1;
+        this.rows = app_constant_1.default.GRID_ROWS_PER_PAGE;
+        this._rdata = [];
         this.reqRowNum = this.rows[0];
         this.pagNa = { firstBtn: true, prevBtn: true, nxtBtn: true, lastBtn: true };
         console.log("inside ng2 grid consrtuctor");
     }
+    Object.defineProperty(Ng2Grid.prototype, "rdata", {
+        get: function () {
+            return this._rdata;
+        },
+        set: function (value) {
+            this._rdata = value;
+        },
+        enumerable: true,
+        configurable: true
+    });
     Ng2Grid.prototype.deleteJobs = function () {
     };
     Ng2Grid.prototype.toggleAll = function () {
@@ -41,7 +53,7 @@ var Ng2Grid = (function () {
         core_1.Component({
             selector: 'ng2-grid',
             templateUrl: './app/view/ng2Grid.html',
-            styleUrls: ['./app/css/custom.css']
+            styleUrls: ['./app/css/custom.css'],
         }), 
         __metadata('design:paramtypes', [])
     ], Ng2Grid);

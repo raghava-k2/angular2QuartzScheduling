@@ -18,9 +18,9 @@ var LoadData = (function () {
         this.http = http;
         console.log('inside load  data methods');
     }
-    LoadData.prototype.getJobDetails = function () {
+    LoadData.prototype.getJobDetails = function (clientName) {
         var params = new http_1.URLSearchParams();
-        params.set("jobName", "vijay");
+        params.set("jobName", clientName ? clientName : "");
         return this.http.get('http://hyrdlt1118.es.ad.adp.com:9080/GLIquartz/do/getjobdetails', { search: params });
     };
     LoadData = __decorate([

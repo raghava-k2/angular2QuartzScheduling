@@ -4,10 +4,11 @@
  */
 import {Component, Inject, Input} from '@angular/core';
 import {LoadData} from "./app.loadData";
+import {Ng2Grid} from "./app.grid.component";
 @Component({
     selector: 'client-search',
     templateUrl: './app/view/search.html',
-    providers: [LoadData],
+    providers: [LoadData, Ng2Grid],
     styles: [`main {
 	border-width: 10px;
 	border-color: darkkhaki;
@@ -18,17 +19,16 @@ import {LoadData} from "./app.loadData";
 }`]
 })
 export class AppSearch {
-    localData:string;
-    constructor(public jobService: LoadData) {
+    searchJobNames: string;
+
+    constructor(private jobService: LoadData, private ng2grid: Ng2Grid) {
         console.log("inside search constructor");
-        this.localData="raghava";
     }
 
     getAllJobDetails() {
-        console.log('inside search click event');
-        this.jobService.getJobDetails().subscribe((response)=> {
+        this.jobService.getJobDetails(this.searchJobNames).subscribe((response)=> {
             console.log(response.json());
+            this.ng2grid.rdata=response.json();
         });
-        console.log("after search method");
     }
 }

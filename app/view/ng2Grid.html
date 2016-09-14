@@ -15,11 +15,23 @@
                        (change)="toggleCheck($event)"/></td>
             <td [innerHTML]="row.id"></td>
             <td [innerHTML]="row.userName"></td>
+            <td><a [innerHTML]="row.jobName" (click)="editJobDetails($event)"></a></td>
+            <td [innerHTML]="row.jobGroupName"></td>
+            <td [innerHTML]="row.jobDateTime"></td>
+            <td [innerHTML]="row.nextExecTime"></td>
+            <td><select class="form-control" [(ngModel)]="row.changed">
+                <option *ngFor="let row of row.action" [value]="row" [innerHTML]="row" [selected]="index == 0"></option>
+            </select>
+            </td>
+            \
+        </tr>
+        <tr [hidden]="rdata.length != 0">
+            <td [attr.colspan]="cLength" class="alert alert-info">No data is available</td>
         </tr>
         </tbody>
         <tfoot>
         <tr>
-            <td colspan="3">
+            <td [attr.colspan]="cLength">
                 <button class="btn btn-primary" [disabled]="pagNa.firstBtn" (click)="first()">
                     &lt;&lt;</button>
                 &nbsp;
