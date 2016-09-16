@@ -20,10 +20,7 @@ body {
 }`]
 })
 export class DisplayComponent {
-    public value: string;
-
+    
     constructor() {
-        this.value = "raghava";
-        console.log('inside constructor');
     }
 }

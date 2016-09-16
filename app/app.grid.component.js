@@ -14,25 +14,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var app_constant_1 = require("./app.constant");
 var Ng2Grid = (function () {
-    function Ng2Grid() {
+    function Ng2Grid(differs) {
+        this.differs = differs;
         this.cdata = app_constant_1.default.GRID_HEADERS;
         this.cLength = this.cdata.length + 1;
         this.rows = app_constant_1.default.GRID_ROWS_PER_PAGE;
-        this._rdata = [];
         this.reqRowNum = this.rows[0];
         this.pagNa = { firstBtn: true, prevBtn: true, nxtBtn: true, lastBtn: true };
-        console.log("inside ng2 grid consrtuctor");
+        this.start = 0;
+        this.checkCurrPage();
     }
-    Object.defineProperty(Ng2Grid.prototype, "rdata", {
-        get: function () {
-            return this._rdata;
-        },
-        set: function (value) {
-            this._rdata = value;
-        },
-        enumerable: true,
-        configurable: true
-    });
+    Ng2Grid.prototype.checkCurrPage = function () {
+        if (this.currPag === this.remPag) {
+            this.pagNa.nxtBtn = this.pagNa.lastBtn = true;
+            this.pagNa.firstBtn = this.pagNa.prevBtn = false;
+        }
+        else if (this.currPag === 1) {
+            this.pagNa.nxtBtn = this.pagNa.lastBtn = false;
+            this.pagNa.firstBtn = this.pagNa.prevBtn = true;
+        }
+        else if (this.currPag > 1) {
+            this.pagNa.nxtBtn = this.pagNa.lastBtn = this.pagNa.firstBtn = this.pagNa.prevBtn = false;
+        }
+    };
     Ng2Grid.prototype.deleteJobs = function () {
     };
     Ng2Grid.prototype.toggleAll = function () {
@@ -49,13 +53,24 @@ var Ng2Grid = (function () {
     };
     Ng2Grid.prototype.onChangeRowNum = function () {
     };
+    Ng2Grid.prototype.ngOnInit = function () {
+        this.end = this.rowData.length;
+    };
+    Ng2Grid.prototype.ngDoCheck = function () {
+        console.log();
+    };
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Object)
+    ], Ng2Grid.prototype, "rowData", void 0);
     Ng2Grid = __decorate([
         core_1.Component({
             selector: 'ng2-grid',
             templateUrl: './app/view/ng2Grid.html',
             styleUrls: ['./app/css/custom.css'],
+            directives: [core_1.NgFor]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [core_1.IterableDiffers])
     ], Ng2Grid);
     return Ng2Grid;
 }());

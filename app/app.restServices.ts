@@ -4,9 +4,8 @@
 import {Injectable} from "@angular/core";
 import {Http, RequestOptions, URLSearchParams} from "@angular/http";
 @Injectable()
-export class LoadData {
+export class RestServices {
     constructor(private http: Http) {
-        console.log('inside load  data methods');
     }
 
     getJobDetails(clientName:string) {

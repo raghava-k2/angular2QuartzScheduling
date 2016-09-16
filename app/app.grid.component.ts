@@ -1,38 +1,47 @@
 /**
  * Created by kukapalv on 9/13/2016.
  */
-import {Component} from "@angular/core";
+import {Component, Input,NgFor,IterableDiffers} from "@angular/core";
 import {default as APPconstants} from "./app.constant";
+
 @Component({
     selector: 'ng2-grid',
     templateUrl: './app/view/ng2Grid.html',
     styleUrls: ['./app/css/custom.css'],
+    directives: [NgFor]
 })
 export class Ng2Grid {
-
+    @Input() rowData;
     private cdata: Array<string>;
     private cLength: number;
-    private _rdata: Array<Object>;
     private rows: Array<number>;
     private reqRowNum: number;
-    private pagNa: Object;
+    private pagNa: any;
+    private start: number;
+    private end: number;
+    private currPag: number;
+    private remPag: number;
 
-    get rdata(): Array<Object> {
-        return this._rdata;
-    }
-
-    set rdata(value: Array<Object>) {
-        this._rdata = value;
-    }
-
-    constructor() {
+    constructor(private differs: IterableDiffers) {
         this.cdata = APPconstants.GRID_HEADERS;
         this.cLength = this.cdata.length + 1;
         this.rows = APPconstants.GRID_ROWS_PER_PAGE;
-        this._rdata =[];
         this.reqRowNum = this.rows[0];
-        this.pagNa = {firstBtn: true, prevBtn: true, nxtBtn: true, lastBtn: true};
-        console.log("inside ng2 grid consrtuctor");
+        this.pagNa = { firstBtn: true, prevBtn: true, nxtBtn: true, lastBtn: true };
+        this.start = 0;
+        this.checkCurrPage();
+    }
+
+    checkCurrPage() {
+        if (this.currPag === this.remPag) {
+            this.pagNa.nxtBtn = this.pagNa.lastBtn = true;
+            this.pagNa.firstBtn = this.pagNa.prevBtn = false;
+        } else if (this.currPag === 1) {
+            this.pagNa.nxtBtn = this.pagNa.lastBtn = false;
+            this.pagNa.firstBtn = this.pagNa.prevBtn = true;
+        } else if (this.currPag > 1) {
+            this.pagNa.nxtBtn = this.pagNa.lastBtn = this.pagNa.firstBtn = this.pagNa.prevBtn = false;
+        }
     }
 
     deleteJobs() {
@@ -65,5 +74,12 @@ export class Ng2Grid {
 
     onChangeRowNum() {
 
+    }
+
+    ngOnInit() {
+        this.end = this.rowData.length;
+    }
+    ngDoCheck(){
+        console.log();
     }
 }

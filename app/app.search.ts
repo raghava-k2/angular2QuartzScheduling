@@ -3,12 +3,12 @@
  * Created by kukapalv on 9/12/2016.
  */
 import {Component, Inject, Input} from '@angular/core';
-import {LoadData} from "./app.loadData";
+import {RestServices} from "./app.restServices";
 import {Ng2Grid} from "./app.grid.component";
 @Component({
     selector: 'client-search',
     templateUrl: './app/view/search.html',
-    providers: [LoadData, Ng2Grid],
+    providers: [RestServices, Ng2Grid],
     styles: [`main {
 	border-width: 10px;
 	border-color: darkkhaki;
@@ -20,15 +20,14 @@ import {Ng2Grid} from "./app.grid.component";
 })
 export class AppSearch {
     searchJobNames: string;
-
-    constructor(private jobService: LoadData, private ng2grid: Ng2Grid) {
-        console.log("inside search constructor");
+    gridData:Array<Object>;
+    constructor(private jobService: RestServices, private ng2grid: Ng2Grid) {
+        this.gridData=[];
     }
 
     getAllJobDetails() {
         this.jobService.getJobDetails(this.searchJobNames).subscribe((response)=> {
-            console.log(response.json());
-            this.ng2grid.rdata=response.json();
+            this.gridData=response.json();
         });
     }
 }

@@ -13,21 +13,20 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  */
 var core_1 = require("@angular/core");
 var http_1 = require("@angular/http");
-var LoadData = (function () {
-    function LoadData(http) {
+var RestServices = (function () {
+    function RestServices(http) {
         this.http = http;
-        console.log('inside load  data methods');
     }
-    LoadData.prototype.getJobDetails = function (clientName) {
+    RestServices.prototype.getJobDetails = function (clientName) {
         var params = new http_1.URLSearchParams();
         params.set("jobName", clientName ? clientName : "");
         return this.http.get('http://hyrdlt1118.es.ad.adp.com:9080/GLIquartz/do/getjobdetails', { search: params });
     };
-    LoadData = __decorate([
+    RestServices = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])
-    ], LoadData);
-    return LoadData;
+    ], RestServices);
+    return RestServices;
 }());
-exports.LoadData = LoadData;
-//# sourceMappingURL=app.loadData.js.map
+exports.RestServices = RestServices;
+//# sourceMappingURL=app.restServices.js.map

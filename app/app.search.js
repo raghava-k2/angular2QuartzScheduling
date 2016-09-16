@@ -13,29 +13,28 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  * Created by kukapalv on 9/12/2016.
  */
 var core_1 = require('@angular/core');
-var app_loadData_1 = require("./app.loadData");
+var app_restServices_1 = require("./app.restServices");
 var app_grid_component_1 = require("./app.grid.component");
 var AppSearch = (function () {
     function AppSearch(jobService, ng2grid) {
         this.jobService = jobService;
         this.ng2grid = ng2grid;
-        console.log("inside search constructor");
+        this.gridData = [];
     }
     AppSearch.prototype.getAllJobDetails = function () {
         var _this = this;
         this.jobService.getJobDetails(this.searchJobNames).subscribe(function (response) {
-            console.log(response.json());
-            _this.ng2grid.rdata = response.json();
+            _this.gridData = response.json();
         });
     };
     AppSearch = __decorate([
         core_1.Component({
             selector: 'client-search',
             templateUrl: './app/view/search.html',
-            providers: [app_loadData_1.LoadData, app_grid_component_1.Ng2Grid],
+            providers: [app_restServices_1.RestServices, app_grid_component_1.Ng2Grid],
             styles: ["main {\n\tborder-width: 10px;\n\tborder-color: darkkhaki;\n\tborder-style: solid;\n\tborder-radius: 7px;\n\tmargin: 10px;\n\tpadding: 20px;\n}"]
         }), 
-        __metadata('design:paramtypes', [app_loadData_1.LoadData, app_grid_component_1.Ng2Grid])
+        __metadata('design:paramtypes', [app_restServices_1.RestServices, app_grid_component_1.Ng2Grid])
     ], AppSearch);
     return AppSearch;
 }());
