@@ -14,15 +14,14 @@ var __metadata = (this && this.__metadata) || function (k, v) {
 var core_1 = require("@angular/core");
 var app_constant_1 = require("./app.constant");
 var Ng2Grid = (function () {
-    function Ng2Grid(differs) {
-        this.differs = differs;
+    function Ng2Grid() {
         this.cdata = app_constant_1.default.GRID_HEADERS;
         this.cLength = this.cdata.length + 1;
         this.rows = app_constant_1.default.GRID_ROWS_PER_PAGE;
         this.reqRowNum = this.rows[0];
         this.pagNa = { firstBtn: true, prevBtn: true, nxtBtn: true, lastBtn: true };
         this.start = 0;
-        this.checkCurrPage();
+        this.currPag = 1;
     }
     Ng2Grid.prototype.checkCurrPage = function () {
         if (this.currPag === this.remPag) {
@@ -36,6 +35,7 @@ var Ng2Grid = (function () {
         else if (this.currPag > 1) {
             this.pagNa.nxtBtn = this.pagNa.lastBtn = this.pagNa.firstBtn = this.pagNa.prevBtn = false;
         }
+        this.checkRowCount();
     };
     Ng2Grid.prototype.deleteJobs = function () {
     };
@@ -44,21 +44,56 @@ var Ng2Grid = (function () {
     Ng2Grid.prototype.toggleCheck = function () {
     };
     Ng2Grid.prototype.first = function () {
+        this.currPag = 1;
+        this.start = this.reqRowNum * (this.currPag - 1);
+        this.end = this.reqRowNum * this.currPag;
+        this.checkCurrPage();
     };
     Ng2Grid.prototype.prev = function () {
+        this.currPag--;
+        this.start = this.reqRowNum * (this.currPag - 1);
+        this.end = this.reqRowNum * this.currPag;
+        this.checkCurrPage();
     };
     Ng2Grid.prototype.nxt = function () {
+        this.currPag++;
+        this.start = this.reqRowNum * (this.currPag - 1);
+        this.end = this.reqRowNum * this.currPag;
+        this.checkCurrPage();
     };
     Ng2Grid.prototype.last = function () {
+        this.currPag = this.remPag;
+        this.start = this.reqRowNum * (this.currPag - 1);
+        this.end = this.reqRowNum * this.currPag;
+        this.checkCurrPage();
     };
-    Ng2Grid.prototype.onChangeRowNum = function () {
+    Ng2Grid.prototype.onChangeRowNum = function (event) {
+        if (this.currPag === this.remPag) {
+            this.remPag = Math.ceil(this.rowData.length / this.reqRowNum);
+            this.currPag = this.remPag;
+        }
+        else {
+            this.remPag = Math.ceil(this.rowData.length / this.reqRowNum);
+            this.currPag = 1;
+        }
+        this.start = this.reqRowNum * (this.currPag - 1);
+        this.end = this.reqRowNum * this.currPag;
+        this.checkCurrPage();
     };
-    Ng2Grid.prototype.ngOnInit = function () {
-        this.end = this.rowData.length;
+    Ng2Grid.prototype.ngOnChanges = function () {
+        this.end = this.reqRowNum;
+        this.remPag = Math.ceil(this.rowData.length / this.reqRowNum);
+        this.checkCurrPage();
     };
     Ng2Grid.prototype.ngDoCheck = function () {
-        console.log();
     };
+    Ng2Grid.prototype.checkRowCount = function () {
+        if (this.rowData.length <= this.reqRowNum) {
+            this.pagNa.nxtBtn = this.pagNa.lastBtn = true;
+            this.pagNa.firstBtn = this.pagNa.prevBtn = true;
+        }
+    };
+    ;
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Object)
@@ -68,9 +103,8 @@ var Ng2Grid = (function () {
             selector: 'ng2-grid',
             templateUrl: './app/view/ng2Grid.html',
             styleUrls: ['./app/css/custom.css'],
-            directives: [core_1.NgFor]
         }), 
-        __metadata('design:paramtypes', [core_1.IterableDiffers])
+        __metadata('design:paramtypes', [])
     ], Ng2Grid);
     return Ng2Grid;
 }());

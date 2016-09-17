@@ -42,7 +42,7 @@
                     &gt;&gt;</button>
                 &nbsp;<label>Rows per page</label>&nbsp;
                 <select class="form-control" style="width:65px;display:inline-block"
-                        [(ngModel)]="reqRowNum" (ngModelChange)="onChangeRowNum()">
+                        [(ngModel)]="reqRowNum" (ngModelChange)="onChangeRowNum($event)">
                     <option *ngFor="let row of rows" [value]="row" [innerHTML]="row" [selected]="index == 0"></option>
                 </select>
             </td>

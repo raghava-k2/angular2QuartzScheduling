@@ -1,14 +1,13 @@
 /**
  * Created by kukapalv on 9/13/2016.
  */
-import {Component, Input,NgFor,IterableDiffers} from "@angular/core";
+import {Component, Input, IterableDiffers} from "@angular/core";
 import {default as APPconstants} from "./app.constant";
 
 @Component({
     selector: 'ng2-grid',
     templateUrl: './app/view/ng2Grid.html',
     styleUrls: ['./app/css/custom.css'],
-    directives: [NgFor]
 })
 export class Ng2Grid {
     @Input() rowData;
@@ -22,14 +21,14 @@ export class Ng2Grid {
     private currPag: number;
     private remPag: number;
 
-    constructor(private differs: IterableDiffers) {
+    constructor() {
         this.cdata = APPconstants.GRID_HEADERS;
         this.cLength = this.cdata.length + 1;
         this.rows = APPconstants.GRID_ROWS_PER_PAGE;
         this.reqRowNum = this.rows[0];
         this.pagNa = { firstBtn: true, prevBtn: true, nxtBtn: true, lastBtn: true };
         this.start = 0;
-        this.checkCurrPage();
+        this.currPag = 1;
     }
 
     checkCurrPage() {
@@ -42,6 +41,7 @@ export class Ng2Grid {
         } else if (this.currPag > 1) {
             this.pagNa.nxtBtn = this.pagNa.lastBtn = this.pagNa.firstBtn = this.pagNa.prevBtn = false;
         }
+        this.checkRowCount();
     }
 
     deleteJobs() {
@@ -57,29 +57,59 @@ export class Ng2Grid {
     }
 
     first() {
-
+        this.currPag = 1;
+        this.start = this.reqRowNum * (this.currPag - 1);
+        this.end = this.reqRowNum * this.currPag;
+        this.checkCurrPage();
     }
 
     prev() {
-
+        this.currPag--;
+        this.start = this.reqRowNum * (this.currPag - 1);
+        this.end = this.reqRowNum * this.currPag;
+        this.checkCurrPage();
     }
 
     nxt() {
-
+        this.currPag++;
+        this.start = this.reqRowNum * (this.currPag - 1);
+        this.end = this.reqRowNum * this.currPag;
+        this.checkCurrPage();
     }
 
     last() {
-
+        this.currPag = this.remPag;
+        this.start = this.reqRowNum * (this.currPag - 1);
+        this.end = this.reqRowNum * this.currPag;
+        this.checkCurrPage();
     }
 
-    onChangeRowNum() {
-
+    onChangeRowNum(event: any) {
+        if (this.currPag === this.remPag) {
+            this.remPag = Math.ceil(this.rowData.length / this.reqRowNum);
+            this.currPag = this.remPag;
+        } else {
+            this.remPag = Math.ceil(this.rowData.length / this.reqRowNum);
+            this.currPag = 1;
+        }
+        this.start = this.reqRowNum * (this.currPag - 1);
+        this.end = this.reqRowNum * this.currPag;
+        this.checkCurrPage();
     }
 
-    ngOnInit() {
-        this.end = this.rowData.length;
+    ngOnChanges() {
+        this.end = this.reqRowNum;
+        this.remPag = Math.ceil(this.rowData.length / this.reqRowNum);
+        this.checkCurrPage();
     }
-    ngDoCheck(){
-        console.log();
+
+    ngDoCheck() {
     }
+
+    checkRowCount() {
+        if (this.rowData.length <= this.reqRowNum) {
+            this.pagNa.nxtBtn = this.pagNa.lastBtn = true;
+            this.pagNa.firstBtn = this.pagNa.prevBtn = true;
+        }
+    };
 }
