@@ -3,50 +3,47 @@
         <a class="custom-btn" (click)="deleteJobs()">-</a></div>
     <table class="table table-bordered table-condensed table-hover">
         <thead>
-        <tr>
-            <th><input type="checkbox" class="checkbox-size" [(ngModel)]="check_all"
-                       (change)="toggleAll(this)"/></th>
-            <th *ngFor="let col of cdata">{{col}}</th>
-        </tr>
+            <tr>
+                <th><input type="checkbox" class="checkbox-size" [(ngModel)]="check_all" (change)="toggleAll($event)" /></th>
+                <th *ngFor="let col of cdata">{{col}}</th>
+            </tr>
         </thead>
         <tbody>
-        <tr *ngFor="let row of rowData | slice:start:end">
-            <td><input type="checkbox" class="checkbox-size" [(ngModel)]="row.checked" [checked]="check_all"
-                       (change)="toggleCheck($event)"/></td>
-            <td [innerHTML]="row.id"></td>
-            <td [innerHTML]="row.userName"></td>
-            <td><a [innerHTML]="row.jobName" (click)="editJobDetails($event)"></a></td>
-            <td [innerHTML]="row.jobGroupName"></td>
-            <td [innerHTML]="row.jobDateTime"></td>
-            <td [innerHTML]="row.nextExecTime"></td>
-            <td [innerHTML]="row.status"></td>
-        </tr>
-        <tr [hidden]="rowData.length != 0">
-            <td [attr.colspan]="cLength" class="alert alert-info">No data is available</td>
-        </tr>
+            <tr *ngFor="let row of rowData | slice:start:end">
+                <td><input type="checkbox" class="checkbox-size" [(ngModel)]="row.checked" (change)="toggleCheck($event)" /></td>
+                <td [innerHTML]="row.id"></td>
+                <td [innerHTML]="row.userName"></td>
+                <td>
+                    <a [innerHTML]="row.jobName" (click)="editJobDetails($event)"></a>
+                </td>
+                <td [innerHTML]="row.jobGroupName"></td>
+                <td [innerHTML]="row.jobDateTime"></td>
+                <td [innerHTML]="row.nextExecTime"></td>
+                <td [innerHTML]="row.status"></td>
+            </tr>
+            <tr [hidden]="rowData.length != 0">
+                <td [attr.colspan]="cLength" class="alert alert-info">No data is available</td>
+            </tr>
         </tbody>
         <tfoot>
-        <tr>
-            <td [attr.colspan]="cLength">
-                <button class="btn btn-primary" [disabled]="pagNa.firstBtn" (click)="first()">
-                    &lt;&lt;</button>
-                &nbsp;
-                <button class="btn btn-primary" [disabled]="pagNa.prevBtn" (click)="prev()">
-                    &lt;</button>
-                &nbsp;<label>Page</label>&nbsp;<span [innerHTML]="currPag"></span>&nbsp;
-                <label>of</label>&nbsp;<span [innerHTML]="remPag"></span>&nbsp;
-                <button class="btn btn-primary" [disabled]="pagNa.nxtBtn" (click)="nxt()">
-                    &gt;</button>
-                &nbsp;
-                <button class="btn btn-primary" [disabled]="pagNa.lastBtn" (click)="last()">
-                    &gt;&gt;</button>
-                &nbsp;<label>Rows per page</label>&nbsp;
-                <select class="form-control" style="width:65px;display:inline-block"
-                        [(ngModel)]="reqRowNum" (ngModelChange)="onChangeRowNum($event)">
+            <tr>
+                <td [attr.colspan]="cLength">
+                    <button class="btn btn-primary" [disabled]="pagNa.firstBtn" (click)="first()">
+                    &lt;&lt;</button> &nbsp;
+                    <button class="btn btn-primary" [disabled]="pagNa.prevBtn" (click)="prev()">
+                    &lt;</button> &nbsp;
+                    <label>Page</label>&nbsp;<span [innerHTML]="currPag"></span>&nbsp;
+                    <label>of</label>&nbsp;<span [innerHTML]="remPag"></span>&nbsp;
+                    <button class="btn btn-primary" [disabled]="pagNa.nxtBtn" (click)="nxt()">
+                    &gt;</button> &nbsp;
+                    <button class="btn btn-primary" [disabled]="pagNa.lastBtn" (click)="last()">
+                    &gt;&gt;</button> &nbsp;
+                    <label>Rows per page</label>&nbsp;
+                    <select class="form-control" style="width:65px;display:inline-block" [(ngModel)]="reqRowNum" (ngModelChange)="onChangeRowNum($event)">
                     <option *ngFor="let row of rows" [value]="row" [innerHTML]="row" [selected]="index == 0"></option>
                 </select>
-            </td>
-        </tr>
+                </td>
+            </tr>
         </tfoot>
     </table>
 </div>

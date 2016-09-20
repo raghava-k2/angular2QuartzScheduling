@@ -1,7 +1,7 @@
 /**
  * Created by kukapalv on 9/13/2016.
  */
-import {Component, Input, IterableDiffers} from "@angular/core";
+import {Component, Input} from "@angular/core";
 import {default as APPconstants} from "./app.constant";
 
 @Component({
@@ -10,7 +10,7 @@ import {default as APPconstants} from "./app.constant";
     styleUrls: ['./app/css/custom.css'],
 })
 export class Ng2Grid {
-    @Input() rowData;
+    @Input() rowData: Array<Object>;
     private cdata: Array<string>;
     private cLength: number;
     private rows: Array<number>;
@@ -48,12 +48,16 @@ export class Ng2Grid {
 
     }
 
-    toggleAll() {
-
+    toggleAll(event: any) {
+        this.rowData.forEach(function (object: any, idx: number) {
+            object.checked = event.target.checked;
+        });
     }
 
     toggleCheck() {
+        this.rowData.forEach(function (object: any, idx: number) {
 
+        });
     }
 
     first() {
@@ -100,6 +104,12 @@ export class Ng2Grid {
     ngOnChanges() {
         this.end = this.reqRowNum;
         this.remPag = Math.ceil(this.rowData.length / this.reqRowNum);
+        if (this.rowData) {
+            this.rowData.forEach(function (object: any, idx: number) {
+                object.id = idx + 1;
+                object.checked = false;
+            });
+        }
         this.checkCurrPage();
     }
 

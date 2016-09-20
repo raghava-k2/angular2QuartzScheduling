@@ -9,21 +9,29 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 /**
- * Created by kukapalv on 9/19/2016.
+ * Created by kukapalv on 9/13/2016.
  */
 var core_1 = require("@angular/core");
-var DisplayComponent = (function () {
-    function DisplayComponent() {
+var app_constant_1 = require("./app.constant");
+var app_pipes_component_1 = require("./app.pipes.component");
+var CreateOrReplaceJob = (function () {
+    function CreateOrReplaceJob() {
+        this.job = { weeks: app_constant_1.default.WEEKS, months: app_constant_1.default.MONTHS };
+        this.status = { show: true };
     }
-    DisplayComponent = __decorate([
+    CreateOrReplaceJob.prototype.goBack = function () {
+    };
+    CreateOrReplaceJob.prototype.createNewJob = function () {
+    };
+    CreateOrReplaceJob = __decorate([
         core_1.Component({
-            selector: 'display',
-            template: "<client-search></client-search>",
-            styles: ["h1 {\n  color: #369;\n  font-family: Arial, Helvetica, sans-serif;\n  font-size: 250%;\n}\nh2, h3 {\n  color: #444;\n  font-family: Arial, Helvetica, sans-serif;\n  font-weight: lighter;\n}\nbody {\n  margin: 2em;\n}"]
+            selector: "create-job",
+            templateUrl: "./app/view/crOrRepJob.html",
+            providers: [app_pipes_component_1.KeysPipe]
         }), 
         __metadata('design:paramtypes', [])
-    ], DisplayComponent);
-    return DisplayComponent;
+    ], CreateOrReplaceJob);
+    return CreateOrReplaceJob;
 }());
-exports.DisplayComponent = DisplayComponent;
-//# sourceMappingURL=app.component.js.map
+exports.CreateOrReplaceJob = CreateOrReplaceJob;
+//# sourceMappingURL=app.crOrRepjob.component.js.map

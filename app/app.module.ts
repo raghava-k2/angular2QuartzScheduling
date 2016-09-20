@@ -8,9 +8,11 @@ import {DisplayComponent} from "./app.component";
 import {AppSearch} from "./app.search";
 import {HttpModule} from "@angular/http";
 import {Ng2Grid} from "./app.grid.component";
+import {CreateOrReplaceJob} from "./app.crOrRepjob.component"
+import {KeysPipe} from "./app.pipes.component";
 @NgModule({
     imports: [BrowserModule, FormsModule, HttpModule],
-    declarations: [DisplayComponent, AppSearch,Ng2Grid],
+    declarations: [DisplayComponent, AppSearch, Ng2Grid, CreateOrReplaceJob,KeysPipe],
     bootstrap: [DisplayComponent]
 })
 export class AppModule {

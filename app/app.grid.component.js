@@ -39,9 +39,14 @@ var Ng2Grid = (function () {
     };
     Ng2Grid.prototype.deleteJobs = function () {
     };
-    Ng2Grid.prototype.toggleAll = function () {
+    Ng2Grid.prototype.toggleAll = function (event) {
+        this.rowData.forEach(function (object, idx) {
+            object.checked = event.target.checked;
+        });
     };
     Ng2Grid.prototype.toggleCheck = function () {
+        this.rowData.forEach(function (object, idx) {
+        });
     };
     Ng2Grid.prototype.first = function () {
         this.currPag = 1;
@@ -83,6 +88,12 @@ var Ng2Grid = (function () {
     Ng2Grid.prototype.ngOnChanges = function () {
         this.end = this.reqRowNum;
         this.remPag = Math.ceil(this.rowData.length / this.reqRowNum);
+        if (this.rowData) {
+            this.rowData.forEach(function (object, idx) {
+                object.id = idx + 1;
+                object.checked = false;
+            });
+        }
         this.checkCurrPage();
     };
     Ng2Grid.prototype.ngDoCheck = function () {
@@ -96,7 +107,7 @@ var Ng2Grid = (function () {
     ;
     __decorate([
         core_1.Input(), 
-        __metadata('design:type', Object)
+        __metadata('design:type', Array)
     ], Ng2Grid.prototype, "rowData", void 0);
     Ng2Grid = __decorate([
         core_1.Component({

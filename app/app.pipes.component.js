@@ -9,21 +9,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
     if (typeof Reflect === "object" && typeof Reflect.metadata === "function") return Reflect.metadata(k, v);
 };
 /**
- * Created by kukapalv on 9/19/2016.
+ * Created by kukapalv on 9/20/2016.
  */
-var core_1 = require("@angular/core");
-var DisplayComponent = (function () {
-    function DisplayComponent() {
+var core_1 = require('@angular/core');
+var KeysPipe = (function () {
+    function KeysPipe() {
     }
-    DisplayComponent = __decorate([
-        core_1.Component({
-            selector: 'display',
-            template: "<client-search></client-search>",
-            styles: ["h1 {\n  color: #369;\n  font-family: Arial, Helvetica, sans-serif;\n  font-size: 250%;\n}\nh2, h3 {\n  color: #444;\n  font-family: Arial, Helvetica, sans-serif;\n  font-weight: lighter;\n}\nbody {\n  margin: 2em;\n}"]
-        }), 
+    KeysPipe.prototype.transform = function (value, args) {
+        var keys = [];
+        for (var key in value) {
+            keys.push(key);
+        }
+        return keys;
+    };
+    KeysPipe = __decorate([
+        core_1.Pipe({ name: 'keys' }), 
         __metadata('design:paramtypes', [])
-    ], DisplayComponent);
-    return DisplayComponent;
+    ], KeysPipe);
+    return KeysPipe;
 }());
-exports.DisplayComponent = DisplayComponent;
-//# sourceMappingURL=app.component.js.map
+exports.KeysPipe = KeysPipe;
+//# sourceMappingURL=app.pipes.component.js.map
