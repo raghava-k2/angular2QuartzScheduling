@@ -5,43 +5,43 @@ export default class APPconstants {
     static GRID_HEADERS: Array<string> = ["Id", "User Name", "Job Name", "Job Group Name", "Start Time", "Next Execute Time", "Status"];
     static GRID_ROWS_PER_PAGE: Array<number> = [10, 20, 30, 40, 50];
     static WEEKS: Array<Object> = [{
-        "sunday": true
+        "SUN": true
     }, {
-            "monday": true
+            "MON": true
         }, {
-            "tuesday": true
+            "TUE": true
         }, {
-            "wednesday": true
+            "WED": true
         }, {
-            "thrusday": true
+            "THR": true
         }, {
-            "friday": true
+            "FRI": true
         }, {
-            "saturday": true
+            "SAT": true
         }];
     static MONTHS: Array<Object> = [{
-        "jan": true
+        "JAN": true
     }, {
-            "feb": true
+            "FEB": true
         }, {
-            "mar": true
+            "MAR": true
         }, {
-            "apr": true
+            "APR": true
         }, {
-            "may": true
+            "MAY": true
         }, {
-            "jun": true
+            "JUN": true
         }, {
-            "jul": true
+            "JUL": true
         }, {
-            "aug": true
+            "AUG": true
         }, {
-            "sep": true
+            "SEP": true
         }, {
-            "oct": true
+            "OCT": true
         }, {
-            "nov": true
+            "NOv": true
         }, {
-            "dec": true
+            "DEC": true
         }]
 }

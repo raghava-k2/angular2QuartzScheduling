@@ -19,15 +19,17 @@ import {Ng2Grid} from "./app.grid.component";
 }`]
 })
 export class AppSearch {
-    searchJobNames: string;
-    gridData:Array<Object>;
+    private searchJobNames: string;
+    private gridData: Array<Object>;
+    private openCreateModal: Boolean;
     constructor(private jobService: RestServices, private ng2grid: Ng2Grid) {
-        this.gridData=[];
+        this.gridData = [];
+        this.openCreateModal = true;
     }
 
     getAllJobDetails() {
-        this.jobService.getJobDetails(this.searchJobNames).subscribe((response)=> {
-            this.gridData=response.json();
+        this.jobService.getJobDetails(this.searchJobNames).subscribe((response) => {
+            this.gridData = response.json();
         });
     }
 }

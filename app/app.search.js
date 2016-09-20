@@ -20,6 +20,7 @@ var AppSearch = (function () {
         this.jobService = jobService;
         this.ng2grid = ng2grid;
         this.gridData = [];
+        this.openCreateModal = true;
     }
     AppSearch.prototype.getAllJobDetails = function () {
         var _this = this;

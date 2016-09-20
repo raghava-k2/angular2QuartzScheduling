@@ -13,21 +13,24 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  */
 var core_1 = require("@angular/core");
 var app_constant_1 = require("./app.constant");
-var app_pipes_component_1 = require("./app.pipes.component");
 var CreateOrReplaceJob = (function () {
     function CreateOrReplaceJob() {
         this.job = { weeks: app_constant_1.default.WEEKS, months: app_constant_1.default.MONTHS };
-        this.status = { show: true };
+        this.status = { show: true, create: true };
     }
     CreateOrReplaceJob.prototype.goBack = function () {
     };
     CreateOrReplaceJob.prototype.createNewJob = function () {
     };
+    __decorate([
+        core_1.Input(), 
+        __metadata('design:type', Boolean)
+    ], CreateOrReplaceJob.prototype, "create", void 0);
     CreateOrReplaceJob = __decorate([
         core_1.Component({
             selector: "create-job",
             templateUrl: "./app/view/crOrRepJob.html",
-            providers: [app_pipes_component_1.KeysPipe]
+            styleUrls: ['./app/css/custom.css']
         }), 
         __metadata('design:paramtypes', [])
     ], CreateOrReplaceJob);
