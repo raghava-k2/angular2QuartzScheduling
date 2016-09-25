@@ -9,7 +9,7 @@
             </button>
             </span>
         </div>
-        <ng2-grid [rowData]="gridData"></ng2-grid>
-        <create-job [create]="openCreateModal"></create-job>
+        <ng2-grid [rowData]="gridData" (addJobs)="createJob()"></ng2-grid>
+        <create-job [create]="openCreateModal" (closeModal)="closeJob()"></create-job>
     </div>
 </main>

@@ -1,4 +1,4 @@
-<article class="slide-modal" [hidden]="create">
+<article [ngClass]="create">
     <section class="modal-content">
         <div class="alert alert-success" [hidden]="status.show">
             <strong [innerHTML]="status.message"></strong>
@@ -93,7 +93,7 @@
             </div>
         </div>
         <div class="form-group row" style="padding-right:17px">
-            <button class="btn btn-primary pull-right" (click)="goBack()">Back</button>
+            <button class="btn btn-primary pull-right" (click)="goBack()">Close</button>
             <button class="btn btn-success pull-right" style="margin-right: 10px" (click)="createNewJob()">Submit</button>
         </div>
     </section>

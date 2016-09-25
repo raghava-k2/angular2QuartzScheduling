@@ -21,10 +21,17 @@ import {Ng2Grid} from "./app.grid.component";
 export class AppSearch {
     private searchJobNames: string;
     private gridData: Array<Object>;
-    private openCreateModal: Boolean;
+    private openCreateModal: string;
     constructor(private jobService: RestServices, private ng2grid: Ng2Grid) {
         this.gridData = [];
-        this.openCreateModal = true;
+        this.openCreateModal = "hide";
+    }
+    createJob() {
+        this.openCreateModal = "slide-modal";
+    }
+
+    closeJob() {
+        this.openCreateModal = "hide";
     }
 
     getAllJobDetails() {

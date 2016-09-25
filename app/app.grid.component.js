@@ -15,6 +15,7 @@ var core_1 = require("@angular/core");
 var app_constant_1 = require("./app.constant");
 var Ng2Grid = (function () {
     function Ng2Grid() {
+        this.addJobs = new core_1.EventEmitter();
         this.cdata = app_constant_1.default.GRID_HEADERS;
         this.cLength = this.cdata.length + 1;
         this.rows = app_constant_1.default.GRID_ROWS_PER_PAGE;
@@ -37,6 +38,9 @@ var Ng2Grid = (function () {
         }
         this.checkRowCount();
     };
+    Ng2Grid.prototype.addJob = function (event) {
+        this.addJobs.emit(event);
+    };
     Ng2Grid.prototype.deleteJobs = function () {
     };
     Ng2Grid.prototype.toggleAll = function (event) {
@@ -45,8 +49,6 @@ var Ng2Grid = (function () {
         });
     };
     Ng2Grid.prototype.toggleCheck = function () {
-        this.rowData.forEach(function (object, idx) {
-        });
     };
     Ng2Grid.prototype.first = function () {
         this.currPag = 1;
@@ -96,8 +98,6 @@ var Ng2Grid = (function () {
         }
         this.checkCurrPage();
     };
-    Ng2Grid.prototype.ngDoCheck = function () {
-    };
     Ng2Grid.prototype.checkRowCount = function () {
         if (this.rowData.length <= this.reqRowNum) {
             this.pagNa.nxtBtn = this.pagNa.lastBtn = true;
@@ -109,6 +109,10 @@ var Ng2Grid = (function () {
         core_1.Input(), 
         __metadata('design:type', Array)
     ], Ng2Grid.prototype, "rowData", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], Ng2Grid.prototype, "addJobs", void 0);
     Ng2Grid = __decorate([
         core_1.Component({
             selector: 'ng2-grid',

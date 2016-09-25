@@ -78,11 +78,15 @@ main {
     padding: 24px;
 }
 
+.hide{
+	visibility: hidden;
+}
+
 .slide-modal{
 	left:100%;
-	-webkit-animation: slide 0.5s forwards;
+	-webkit-animation: slide 1s forwards;
     -webkit-animation-delay: 0s;
-    animation: slide 0.5s forwards;
+    animation: slide 1s forwards;
     animation-delay: 0s;
 }
 
@@ -92,5 +96,4 @@ main {
 
 @keyframes slide {
     100% { left: 0px; }
-}
 }

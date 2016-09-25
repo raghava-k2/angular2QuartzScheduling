@@ -1,7 +1,7 @@
 /**
  * Created by kukapalv on 9/13/2016.
  */
-import {Component, Input} from "@angular/core";
+import {Component, Input, Output, EventEmitter} from "@angular/core";
 import {default as APPconstants} from "./app.constant";
 
 @Component({
@@ -11,6 +11,7 @@ import {default as APPconstants} from "./app.constant";
 })
 export class Ng2Grid {
     @Input() rowData: Array<Object>;
+    @Output() addJobs = new EventEmitter<boolean>();
     private cdata: Array<string>;
     private cLength: number;
     private rows: Array<number>;
@@ -44,6 +45,10 @@ export class Ng2Grid {
         this.checkRowCount();
     }
 
+    addJob(event: any) {
+        this.addJobs.emit(event);
+    }
+
     deleteJobs() {
 
     }
@@ -55,9 +60,6 @@ export class Ng2Grid {
     }
 
     toggleCheck() {
-        this.rowData.forEach(function (object: any, idx: number) {
-
-        });
     }
 
     first() {
@@ -111,9 +113,6 @@ export class Ng2Grid {
             });
         }
         this.checkCurrPage();
-    }
-
-    ngDoCheck() {
     }
 
     checkRowCount() {
