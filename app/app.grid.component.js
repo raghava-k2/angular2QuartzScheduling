@@ -117,7 +117,7 @@ var Ng2Grid = (function () {
         core_1.Component({
             selector: 'ng2-grid',
             templateUrl: './app/view/ng2Grid.html',
-            styleUrls: ['./app/css/custom.css'],
+            styleUrls: ['./app/css/custom.css']
         }), 
         __metadata('design:paramtypes', [])
     ], Ng2Grid);

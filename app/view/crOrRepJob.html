@@ -13,46 +13,46 @@
         <div class="form-group row">
             <label for="example-search-input" class="col-xs-2 col-form-label">Job Name *</label>
             <div class="col-xs-10">
-                <input class="form-control" type="text" value="" id="example-search-input" placeholder="Enter Job Name" [(ngModel)]="job.name"
+                <input class="form-control" type="text" value="" id="example-search-input" placeholder="Enter Job Name" [(ngModel)]="job.jobName"
                     [disabled]="isUpdateable">
             </div>
         </div>
         <div class="form-group row">
             <label for="example-email-input" class="col-xs-2 col-form-label">Job Group Name *</label>
             <div class="col-xs-10">
-                <input class="form-control" type="text" value="" id="example-email-input" placeholder="Enter Job Group Name" [(ngModel)]="job.grpName"
+                <input class="form-control" type="text" value="" id="example-email-input" placeholder="Enter Job Group Name" [(ngModel)]="job.jobGroupName"
                     [disabled]="isUpdateable">
             </div>
         </div>
         <div class="form-group row">
             <label for="example-url-input" class="col-xs-2 col-form-label">Job Desc</label>
             <div class="col-xs-10">
-                <textarea class="form-control" rows="5" cols="20" [(ngModel)]="job.desc" placeholder="Enter Job Description"></textarea>
+                <textarea class="form-control" rows="5" cols="20" [(ngModel)]="job.jobDescription" placeholder="Enter Job Description"></textarea>
             </div>
         </div>
         <div class="form-group row">
             <label for="example-tel-input" class="col-xs-2 col-form-label">GL File Name *</label>
             <div class="col-xs-10">
-                <input class="form-control" type="text" id="example-tel-input" placeholder="Enter GL File Name" [(ngModel)]="job.glName">
+                <input class="form-control" type="text" id="example-tel-input" placeholder="Enter GL File Name" [(ngModel)]="job.glInfo.glFileName">
             </div>
         </div>
         <div class="form-group row">
             <label for="example-password-input" class="col-xs-2 col-form-label">Output File Name</label>
             <div class="col-xs-10">
-                <input class="form-control" type="text" value="" id="example-password-input" placeholder="Enter Output File Name" [(ngModel)]="job.outFileName">
+                <input class="form-control" type="text" value="" id="example-password-input" placeholder="Enter Output File Name" [(ngModel)]="job.glInfo.outputFileName">
             </div>
         </div>
         <div class="form-group row">
             <label for="example-number-input" class="col-xs-2 col-form-label">Map Name *</label>
             <div class="col-xs-10">
-                <input class="form-control" type="text" value="" id="example-text-input" placeholder="Enter Map Name" [(ngModel)]="job.mapName">
+                <input class="form-control" type="text" value="" id="example-text-input" placeholder="Enter Map Name" [(ngModel)]="job.glInfo.mapName">
             </div>
         </div>
         <div class="form-group row">
             <label for="example-datetime-local-input" class="col-xs-2 col-form-label">Job Start time</label>
             <div class="col-xs-10">
                 <input class="form-control" type="datetime-local" value="" id="example-datetime-local-input" placeholder="Enter Date Time"
-                    [(ngModel)]="job.startTime">
+                    [(ngModel)]="job.jobDateTime">
             </div>
         </div>
         <div class="form-group row">
@@ -89,7 +89,7 @@
             <label for="example-datetime-local-input" class="col-xs-2 col-form-label">Job End time</label>
             <div class="col-xs-10">
                 <input class="form-control" type="datetime-local" value="" id="example-datetime-local-input" placeholder="Enter Date Time"
-                    [(ngModel)]="job.endTime">
+                    [(ngModel)]="job.jobEndtime">
             </div>
         </div>
         <div class="form-group row" style="padding-right:17px">

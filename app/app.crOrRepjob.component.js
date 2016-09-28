@@ -16,13 +16,14 @@ var app_constant_1 = require("./app.constant");
 var CreateOrReplaceJob = (function () {
     function CreateOrReplaceJob() {
         this.closeModal = new core_1.EventEmitter();
-        this.job = { weeks: app_constant_1.default.WEEKS.slice(), months: app_constant_1.default.MONTHS.slice() };
+        this.job = { glInfo: {}, weeks: app_constant_1.default.WEEKS.slice(), months: app_constant_1.default.MONTHS.slice() };
         this.status = { show: true, create: true };
     }
     CreateOrReplaceJob.prototype.goBack = function (event) {
         this.closeModal.emit(event);
     };
     CreateOrReplaceJob.prototype.createNewJob = function () {
+        console.log(this);
     };
     __decorate([
         core_1.Input(), 

@@ -15,13 +15,13 @@ export class CreateOrReplaceJob {
     private job: Object;
     private status: Object;
     constructor() {
-        this.job = { weeks: APPconstants.WEEKS.slice(), months: APPconstants.MONTHS.slice() };
+        this.job = { glInfo: {}, weeks: APPconstants.WEEKS.slice(), months: APPconstants.MONTHS.slice() };
         this.status = { show: true, create: true };
     }
     goBack(event: any) {
         this.closeModal.emit(event)
     }
     createNewJob() {
-
+        console.log(this);
     }
 }

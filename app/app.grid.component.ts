@@ -7,7 +7,7 @@ import {default as APPconstants} from "./app.constant";
 @Component({
     selector: 'ng2-grid',
     templateUrl: './app/view/ng2Grid.html',
-    styleUrls: ['./app/css/custom.css'],
+    styleUrls: ['./app/css/custom.css']
 })
 export class Ng2Grid {
     @Input() rowData: Array<Object>;
