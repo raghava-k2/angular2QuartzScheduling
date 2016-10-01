@@ -22,6 +22,17 @@ var RestServices = (function () {
         params.set("jobName", clientName ? clientName : "");
         return this.http.get('http://hyrdlt1118.es.ad.adp.com:9080/GLIquartz/do/getjobdetails', { search: params });
     };
+    RestServices.prototype.createNewJob = function (jobData) {
+        return this.http.put("http://hyrdlt1118.es.ad.adp.com:9080/GLIquartz/do/createjob", jobData);
+    };
+    RestServices.prototype.deleteMultipleJobs = function (jobCodes) {
+        var params = new http_1.URLSearchParams();
+        params.set("data", jobCodes);
+        return this.http.delete("http://hyrdlt1118.es.ad.adp.com:9080/GLIquartz/do/deletejobs", { search: params });
+    };
+    RestServices.prototype.updateJob = function (jobData) {
+        return this.http.post("http://hyrdlt1118.es.ad.adp.com:9080/GLIquartz/do/updatejob", jobData);
+    };
     RestServices = __decorate([
         core_1.Injectable(), 
         __metadata('design:paramtypes', [http_1.Http])

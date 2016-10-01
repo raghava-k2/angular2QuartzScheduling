@@ -13,17 +13,46 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  */
 var core_1 = require("@angular/core");
 var app_constant_1 = require("./app.constant");
+var app_restServices_1 = require("./app.restServices");
 var CreateOrReplaceJob = (function () {
-    function CreateOrReplaceJob() {
+    function CreateOrReplaceJob(jobService) {
+        this.jobService = jobService;
         this.closeModal = new core_1.EventEmitter();
-        this.job = { glInfo: {}, weeks: app_constant_1.default.WEEKS.slice(), months: app_constant_1.default.MONTHS.slice() };
-        this.status = { show: true, create: true };
+        this.job = { glInfo: {} };
+        this.job.weeks = app_constant_1.default.WEEKS.slice();
+        this.job.months = app_constant_1.default.MONTHS.slice();
+        this.status = { show: true, message: "" };
     }
     CreateOrReplaceJob.prototype.goBack = function (event) {
+        this.job = { glInfo: {}, weeks: app_constant_1.default.WEEKS.slice(), months: app_constant_1.default.MONTHS.slice() };
         this.closeModal.emit(event);
     };
-    CreateOrReplaceJob.prototype.createNewJob = function () {
+    CreateOrReplaceJob.prototype.createOrUpdateJob = function () {
         console.log(this);
+    };
+    CreateOrReplaceJob.prototype.createNewJob = function () {
+        this.job.jobExeDays = this.getSelectedDays();
+        this.job.jobExeMonths = this.getSelectedMonths();
+        this.job.jobDateTime = this.trimDate(new Date(this.job.jobDateTime));
+        this.job.jobEndtime = this.trimDate(new Date(this.job.jobEndtime));
+        this.jobService.createNewJob(this.job).subscribe(function (response) {
+            response.json();
+        });
+    };
+    CreateOrReplaceJob.prototype.getSelectedDays = function () {
+        return this.job.weeks.map(function (obj, idx) {
+            if (obj[Object.keys(obj)[0]])
+                return (idx + 1);
+        });
+    };
+    CreateOrReplaceJob.prototype.getSelectedMonths = function () {
+        return this.job.months.map(function (obj, idx) {
+            if (obj[Object.keys(obj)[0]])
+                return idx;
+        });
+    };
+    CreateOrReplaceJob.prototype.trimDate = function (obj) {
+        return obj ? obj.toString().substring(0, obj.toString().lastIndexOf(':') + 3) : '';
     };
     __decorate([
         core_1.Input(), 
@@ -36,10 +65,11 @@ var CreateOrReplaceJob = (function () {
     CreateOrReplaceJob = __decorate([
         core_1.Component({
             selector: "create-job",
+            providers: [app_restServices_1.RestServices],
             templateUrl: "./app/view/crOrRepJob.html",
             styleUrls: ['./app/css/custom.css']
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [app_restServices_1.RestServices])
     ], CreateOrReplaceJob);
     return CreateOrReplaceJob;
 }());
