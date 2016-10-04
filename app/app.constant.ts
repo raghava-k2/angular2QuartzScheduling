@@ -43,5 +43,7 @@ export default class APPconstants {
             "NOv": true
         }, {
             "DEC": true
-        }]
+        }];
+    static IS_UPDATE: boolean;
+    static UPDATE_JOB_DATA: any;
 }

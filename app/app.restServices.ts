@@ -2,29 +2,32 @@
  * Created by kukapalv on 9/12/2016.
  */
 import {Injectable} from "@angular/core";
-import {Http, RequestOptions, URLSearchParams} from "@angular/http";
+import {Http, RequestOptions, URLSearchParams, Headers} from "@angular/http";
 @Injectable()
 export class RestServices {
+    private url: string = "http://localhost:9080/GLIquartz";
     constructor(private http: Http) {
     }
 
     getJobDetails(clientName: string) {
         let params = new URLSearchParams();
         params.set("jobName", clientName ? clientName : "");
-        return this.http.get('http://hyrdlt1118.es.ad.adp.com:9080/GLIquartz/do/getjobdetails', { search: params });
+        return this.http.get(this.url + "/do/getjobdetails", { search: params });
     }
 
     createNewJob(jobData: any) {
-        return this.http.put("http://hyrdlt1118.es.ad.adp.com:9080/GLIquartz/do/createjob", jobData);
+        let body = JSON.stringify(jobData);
+        let headers = new Headers({ 'Content-Type': 'application/json' });
+        let options = new RequestOptions({ headers: headers });
+        return this.http.post(this.url + "/do/createjob", body);
     }
 
     deleteMultipleJobs(jobCodes: any) {
-        let params = new URLSearchParams();
-        params.set("data", jobCodes);
-        return this.http.delete("http://hyrdlt1118.es.ad.adp.com:9080/GLIquartz/do/deletejobs", { search: params });
+        let body = JSON.stringify(jobCodes);
+        return this.http.post(this.url + "/do/deletejobs", body);
     }
     updateJob(jobData: any) {
-        return this.http.post("http://hyrdlt1118.es.ad.adp.com:9080/GLIquartz/do/updatejob", jobData);
+        return this.http.post(this.url + "/do/updatejob", jobData);
     }
 
 }

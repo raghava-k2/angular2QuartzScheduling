@@ -13,9 +13,12 @@ var __metadata = (this && this.__metadata) || function (k, v) {
  */
 var core_1 = require("@angular/core");
 var app_constant_1 = require("./app.constant");
+var app_restServices_1 = require("./app.restServices");
 var Ng2Grid = (function () {
-    function Ng2Grid() {
+    function Ng2Grid(jobService) {
+        this.jobService = jobService;
         this.addJobs = new core_1.EventEmitter();
+        this.deleteJob = new core_1.EventEmitter();
         this.cdata = app_constant_1.default.GRID_HEADERS;
         this.cLength = this.cdata.length + 1;
         this.rows = app_constant_1.default.GRID_ROWS_PER_PAGE;
@@ -42,6 +45,21 @@ var Ng2Grid = (function () {
         this.addJobs.emit(event);
     };
     Ng2Grid.prototype.deleteJobs = function () {
+        var _this = this;
+        var map = new Map();
+        this.rowData.map(function (object, idx) {
+            if (object.checked)
+                map.set(object.clientId, object.jobName);
+        });
+        this.jobService.deleteMultipleJobs(Array.from(map.keys())).subscribe(function (response) {
+            var json = response.json();
+            if (json.status === "success") {
+                _this.deleteJob.emit(Array.from(map.values()));
+            }
+            else {
+                _this.deleteJob.emit(json.msg);
+            }
+        });
     };
     Ng2Grid.prototype.toggleAll = function (event) {
         this.rowData.forEach(function (object, idx) {
@@ -104,7 +122,11 @@ var Ng2Grid = (function () {
             this.pagNa.firstBtn = this.pagNa.prevBtn = true;
         }
     };
-    ;
+    Ng2Grid.prototype.editJobDetails = function (event) {
+        app_constant_1.default.IS_UPDATE = true;
+        app_constant_1.default.UPDATE_JOB_DATA = event;
+        this.addJobs.emit(event);
+    };
     __decorate([
         core_1.Input(), 
         __metadata('design:type', Array)
@@ -113,13 +135,18 @@ var Ng2Grid = (function () {
         core_1.Output(), 
         __metadata('design:type', Object)
     ], Ng2Grid.prototype, "addJobs", void 0);
+    __decorate([
+        core_1.Output(), 
+        __metadata('design:type', Object)
+    ], Ng2Grid.prototype, "deleteJob", void 0);
     Ng2Grid = __decorate([
         core_1.Component({
             selector: 'ng2-grid',
             templateUrl: './app/view/ng2Grid.html',
-            styleUrls: ['./app/css/custom.css']
+            styleUrls: ['./app/css/custom.css'],
+            providers: [app_restServices_1.RestServices]
         }), 
-        __metadata('design:paramtypes', [])
+        __metadata('design:paramtypes', [app_restServices_1.RestServices])
     ], Ng2Grid);
     return Ng2Grid;
 }());

@@ -22,9 +22,13 @@ export class AppSearch {
     private searchJobNames: string;
     private gridData: Array<Object>;
     private openCreateModal: string;
+    private status: any;
     constructor(private jobService: RestServices, private ng2grid: Ng2Grid) {
         this.gridData = [];
         this.openCreateModal = "hide";
+        this.status = {};
+        this.status.show = true;
+        this.status.message = "";
     }
     createJob() {
         this.openCreateModal = "slide-modal";
@@ -32,6 +36,16 @@ export class AppSearch {
 
     closeJob() {
         this.openCreateModal = "hide";
+    }
+
+    isJobDeleted(event: any) {
+        this.status.show = false;
+        this.status.message = "successfully deleted jobs : " + event;
+        setTimeout(() => {
+            this.status.show = true;
+            this.status.message = "";
+        }, 2000)
+        this.getAllJobDetails();
     }
 
     getAllJobDetails() {

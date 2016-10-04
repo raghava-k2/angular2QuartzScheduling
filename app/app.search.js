@@ -21,12 +21,25 @@ var AppSearch = (function () {
         this.ng2grid = ng2grid;
         this.gridData = [];
         this.openCreateModal = "hide";
+        this.status = {};
+        this.status.show = true;
+        this.status.message = "";
     }
     AppSearch.prototype.createJob = function () {
         this.openCreateModal = "slide-modal";
     };
     AppSearch.prototype.closeJob = function () {
         this.openCreateModal = "hide";
+    };
+    AppSearch.prototype.isJobDeleted = function (event) {
+        var _this = this;
+        this.status.show = false;
+        this.status.message = "successfully deleted jobs : " + event;
+        setTimeout(function () {
+            _this.status.show = true;
+            _this.status.message = "";
+        }, 2000);
+        this.getAllJobDetails();
     };
     AppSearch.prototype.getAllJobDetails = function () {
         var _this = this;

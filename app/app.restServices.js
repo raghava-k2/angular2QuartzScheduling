@@ -16,22 +16,25 @@ var http_1 = require("@angular/http");
 var RestServices = (function () {
     function RestServices(http) {
         this.http = http;
+        this.url = "http://localhost:9080/GLIquartz";
     }
     RestServices.prototype.getJobDetails = function (clientName) {
         var params = new http_1.URLSearchParams();
         params.set("jobName", clientName ? clientName : "");
-        return this.http.get('http://hyrdlt1118.es.ad.adp.com:9080/GLIquartz/do/getjobdetails', { search: params });
+        return this.http.get(this.url + "/do/getjobdetails", { search: params });
     };
     RestServices.prototype.createNewJob = function (jobData) {
-        return this.http.put("http://hyrdlt1118.es.ad.adp.com:9080/GLIquartz/do/createjob", jobData);
+        var body = JSON.stringify(jobData);
+        var headers = new http_1.Headers({ 'Content-Type': 'application/json' });
+        var options = new http_1.RequestOptions({ headers: headers });
+        return this.http.post(this.url + "/do/createjob", body);
     };
     RestServices.prototype.deleteMultipleJobs = function (jobCodes) {
-        var params = new http_1.URLSearchParams();
-        params.set("data", jobCodes);
-        return this.http.delete("http://hyrdlt1118.es.ad.adp.com:9080/GLIquartz/do/deletejobs", { search: params });
+        var body = JSON.stringify(jobCodes);
+        return this.http.post(this.url + "/do/deletejobs", body);
     };
     RestServices.prototype.updateJob = function (jobData) {
-        return this.http.post("http://hyrdlt1118.es.ad.adp.com:9080/GLIquartz/do/updatejob", jobData);
+        return this.http.post(this.url + "/do/updatejob", jobData);
     };
     RestServices = __decorate([
         core_1.Injectable(), 

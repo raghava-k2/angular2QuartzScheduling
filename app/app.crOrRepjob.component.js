@@ -21,22 +21,35 @@ var CreateOrReplaceJob = (function () {
         this.job = { glInfo: {} };
         this.job.weeks = app_constant_1.default.WEEKS.slice();
         this.job.months = app_constant_1.default.MONTHS.slice();
-        this.status = { show: true, message: "" };
+        this.status = {};
+        this.status.show = true;
+        this.status.message = "";
     }
     CreateOrReplaceJob.prototype.goBack = function (event) {
         this.job = { glInfo: {}, weeks: app_constant_1.default.WEEKS.slice(), months: app_constant_1.default.MONTHS.slice() };
+        this.status.show = true;
+        this.status.message = "";
         this.closeModal.emit(event);
     };
     CreateOrReplaceJob.prototype.createOrUpdateJob = function () {
-        console.log(this);
+        this.createNewJob();
     };
     CreateOrReplaceJob.prototype.createNewJob = function () {
+        var _this = this;
         this.job.jobExeDays = this.getSelectedDays();
         this.job.jobExeMonths = this.getSelectedMonths();
-        this.job.jobDateTime = this.trimDate(new Date(this.job.jobDateTime));
-        this.job.jobEndtime = this.trimDate(new Date(this.job.jobEndtime));
+        this.job.jobDateTime = this.trimDate(this.job.jobDateTime ? new Date(this.job.jobDateTime) : "");
+        this.job.jobEndtime = this.trimDate(this.job.jobEndtime ? new Date(this.job.jobEndtime) : "");
         this.jobService.createNewJob(this.job).subscribe(function (response) {
-            response.json();
+            var json = response.json();
+            if (json.status === "success") {
+                _this.status.show = false;
+                _this.status.message = "successfully created new job : " + _this.job.jobName;
+            }
+            else {
+                _this.status.show = false;
+                _this.status.message = json.msg;
+            }
         });
     };
     CreateOrReplaceJob.prototype.getSelectedDays = function () {

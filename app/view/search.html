@@ -1,5 +1,8 @@
 <!--Created by kukapalv on 9/12/2016.-->
 <main>
+    <div class="alert alert-success" [hidden]="status.show">
+        <strong [innerHTML]="status.message"></strong>
+    </div>
     <div id="custom-search-input">
         <div class="input-group col-md-12">
             <input type="text" class="search-query form-control" placeholder="search User Jobs" [(ngModel)]="searchJobNames">
@@ -9,7 +12,7 @@
             </button>
             </span>
         </div>
-        <ng2-grid [rowData]="gridData" (addJobs)="createJob()"></ng2-grid>
+        <ng2-grid [rowData]="gridData" (addJobs)="createJob()" (deleteJob)="isJobDeleted($event)"></ng2-grid>
         <create-job [create]="openCreateModal" (closeModal)="closeJob()"></create-job>
     </div>
 </main>

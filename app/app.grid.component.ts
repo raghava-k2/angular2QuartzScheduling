@@ -3,15 +3,17 @@
  */
 import {Component, Input, Output, EventEmitter} from "@angular/core";
 import {default as APPconstants} from "./app.constant";
-
+import {RestServices} from "./app.restServices";
 @Component({
     selector: 'ng2-grid',
     templateUrl: './app/view/ng2Grid.html',
-    styleUrls: ['./app/css/custom.css']
+    styleUrls: ['./app/css/custom.css'],
+    providers: [RestServices]
 })
 export class Ng2Grid {
     @Input() rowData: Array<Object>;
     @Output() addJobs = new EventEmitter<boolean>();
+    @Output() deleteJob = new EventEmitter<any>();
     private cdata: Array<string>;
     private cLength: number;
     private rows: Array<number>;
@@ -22,7 +24,7 @@ export class Ng2Grid {
     private currPag: number;
     private remPag: number;
 
-    constructor() {
+    constructor(private jobService: RestServices) {
         this.cdata = APPconstants.GRID_HEADERS;
         this.cLength = this.cdata.length + 1;
         this.rows = APPconstants.GRID_ROWS_PER_PAGE;
@@ -50,7 +52,20 @@ export class Ng2Grid {
     }
 
     deleteJobs() {
-
+        let map = new Map();
+        this.rowData.map(function (object: any, idx: number) {
+            if (object.checked)
+                map.set(object.clientId, object.jobName);
+        });
+        this.jobService.deleteMultipleJobs(Array.from(map.keys())).subscribe((response) => {
+            let json = response.json();
+            if (json.status === "success") {
+                this.deleteJob.emit(Array.from(map.values()));
+            }
+            else {
+                this.deleteJob.emit(json.msg);
+            }
+        });
     }
 
     toggleAll(event: any) {
@@ -120,5 +135,11 @@ export class Ng2Grid {
             this.pagNa.nxtBtn = this.pagNa.lastBtn = true;
             this.pagNa.firstBtn = this.pagNa.prevBtn = true;
         }
-    };
+    }
+
+    editJobDetails(event: any) {
+        APPconstants.IS_UPDATE = true;
+        APPconstants.UPDATE_JOB_DATA = event;
+        this.addJobs.emit(event);
+    }
 }
