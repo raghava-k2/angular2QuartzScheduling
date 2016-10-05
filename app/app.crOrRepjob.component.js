@@ -32,14 +32,14 @@ var CreateOrReplaceJob = (function () {
         this.closeModal.emit(event);
     };
     CreateOrReplaceJob.prototype.createOrUpdateJob = function () {
-        this.createNewJob();
+        if (!app_constant_1.default.IS_UPDATE)
+            this.createNewJob();
+        else
+            this.up;
     };
     CreateOrReplaceJob.prototype.createNewJob = function () {
         var _this = this;
-        this.job.jobExeDays = this.getSelectedDays();
-        this.job.jobExeMonths = this.getSelectedMonths();
-        this.job.jobDateTime = this.trimDate(this.job.jobDateTime ? new Date(this.job.jobDateTime) : "");
-        this.job.jobEndtime = this.trimDate(this.job.jobEndtime ? new Date(this.job.jobEndtime) : "");
+        this.createData();
         this.jobService.createNewJob(this.job).subscribe(function (response) {
             var json = response.json();
             if (json.status === "success") {
@@ -51,6 +51,19 @@ var CreateOrReplaceJob = (function () {
                 _this.status.message = json.msg;
             }
         });
+    };
+    CreateOrReplaceJob.prototype.updateJob = function () {
+        this.createData();
+        this.jobService.updateJob(this.job).subscribe(function (response) {
+            var json = response.json();
+            console.log(json);
+        });
+    };
+    CreateOrReplaceJob.prototype.createData = function () {
+        this.job.jobExeDays = this.getSelectedDays();
+        this.job.jobExeMonths = this.getSelectedMonths();
+        this.job.jobDateTime = this.trimDate(this.job.jobDateTime ? new Date(this.job.jobDateTime) : "");
+        this.job.jobEndtime = this.trimDate(this.job.jobEndtime ? new Date(this.job.jobEndtime) : "");
     };
     CreateOrReplaceJob.prototype.getSelectedDays = function () {
         return this.job.weeks.map(function (obj, idx) {
@@ -66,6 +79,13 @@ var CreateOrReplaceJob = (function () {
     };
     CreateOrReplaceJob.prototype.trimDate = function (obj) {
         return obj ? obj.toString().substring(0, obj.toString().lastIndexOf(':') + 3) : '';
+    };
+    CreateOrReplaceJob.prototype.ngOnChanges = function () {
+        if (this.create === "slide-modal") {
+            if (app_constant_1.default.IS_UPDATE) {
+                this.job = app_constant_1.default.UPDATE_JOB_DATA;
+            }
+        }
     };
     __decorate([
         core_1.Input(), 
