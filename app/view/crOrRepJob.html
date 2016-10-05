@@ -7,21 +7,21 @@
             <label for="example-text-input" class="col-xs-2 col-form-label">Client Name *</label>
             <div class="col-xs-10">
                 <input class="form-control" type="text" value="" id="example-text-input" placeholder="Enter Client Name" [(ngModel)]="job.userName"
-                    [disabled]="isUpdateable">
+                    [disabled]="is_update">
             </div>
         </div>
         <div class="form-group row">
             <label for="example-search-input" class="col-xs-2 col-form-label">Job Name *</label>
             <div class="col-xs-10">
                 <input class="form-control" type="text" value="" id="example-search-input" placeholder="Enter Job Name" [(ngModel)]="job.jobName"
-                    [disabled]="isUpdateable">
+                    [disabled]="is_update">
             </div>
         </div>
         <div class="form-group row">
             <label for="example-email-input" class="col-xs-2 col-form-label">Job Group Name *</label>
             <div class="col-xs-10">
                 <input class="form-control" type="text" value="" id="example-email-input" placeholder="Enter Job Group Name" [(ngModel)]="job.jobGroupName"
-                    [disabled]="isUpdateable">
+                    [disabled]="is_update">
             </div>
         </div>
         <div class="form-group row">
@@ -51,8 +51,7 @@
         <div class="form-group row">
             <label for="example-datetime-local-input" class="col-xs-2 col-form-label">Job Start time</label>
             <div class="col-xs-10">
-                <input class="form-control" type="datetime-local" value="" id="example-datetime-local-input" placeholder="Enter Date Time"
-                    [(ngModel)]="job.jobDateTime">
+                <input class="form-control" type="datetime-local" value="" id="startTime" placeholder="Enter Date Time" [(ngModel)]="job.jobDateTime">
             </div>
         </div>
         <div class="form-group row">
@@ -88,8 +87,7 @@
         <div class="form-group row">
             <label for="example-datetime-local-input" class="col-xs-2 col-form-label">Job End time</label>
             <div class="col-xs-10">
-                <input class="form-control" type="datetime-local" value="" id="example-datetime-local-input" placeholder="Enter Date Time"
-                    [(ngModel)]="job.jobEndtime">
+                <input class="form-control" type="datetime-local" value="" id="endTime" placeholder="Enter Date Time" [(ngModel)]="job.jobEndtime">
             </div>
         </div>
         <div class="form-group row" style="padding-right:17px">

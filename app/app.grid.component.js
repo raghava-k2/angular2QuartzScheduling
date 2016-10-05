@@ -122,10 +122,10 @@ var Ng2Grid = (function () {
             this.pagNa.firstBtn = this.pagNa.prevBtn = true;
         }
     };
-    Ng2Grid.prototype.editJobDetails = function (event) {
+    Ng2Grid.prototype.editJobDetails = function (obj) {
         app_constant_1.default.IS_UPDATE = true;
-        app_constant_1.default.UPDATE_JOB_DATA = event;
-        this.addJobs.emit(event);
+        app_constant_1.default.UPDATE_JOB_DATA = this.rowData[obj];
+        this.addJobs.emit(true);
     };
     __decorate([
         core_1.Input(), 

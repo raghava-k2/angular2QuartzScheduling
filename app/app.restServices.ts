@@ -27,7 +27,8 @@ export class RestServices {
         return this.http.post(this.url + "/do/deletejobs", body);
     }
     updateJob(jobData: any) {
-        return this.http.post(this.url + "/do/updatejob", jobData);
+        let body = JSON.stringify(jobData);
+        return this.http.post(this.url + "/do/updatejob", body);
     }
 
 }

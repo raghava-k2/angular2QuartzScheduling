@@ -24,18 +24,21 @@ var CreateOrReplaceJob = (function () {
         this.status = {};
         this.status.show = true;
         this.status.message = "";
+        this.is_update = false;
     }
     CreateOrReplaceJob.prototype.goBack = function (event) {
         this.job = { glInfo: {}, weeks: app_constant_1.default.WEEKS.slice(), months: app_constant_1.default.MONTHS.slice() };
         this.status.show = true;
         this.status.message = "";
+        app_constant_1.default.IS_UPDATE = false;
+        this.is_update = false;
         this.closeModal.emit(event);
     };
     CreateOrReplaceJob.prototype.createOrUpdateJob = function () {
         if (!app_constant_1.default.IS_UPDATE)
             this.createNewJob();
         else
-            this.up;
+            this.updateJob();
     };
     CreateOrReplaceJob.prototype.createNewJob = function () {
         var _this = this;
@@ -53,10 +56,18 @@ var CreateOrReplaceJob = (function () {
         });
     };
     CreateOrReplaceJob.prototype.updateJob = function () {
+        var _this = this;
         this.createData();
         this.jobService.updateJob(this.job).subscribe(function (response) {
             var json = response.json();
-            console.log(json);
+            if (json.status === "success") {
+                _this.status.show = false;
+                _this.status.message = "successfully updated the job : " + _this.job.jobName;
+            }
+            else {
+                _this.status.show = false;
+                _this.status.message = json.msg;
+            }
         });
     };
     CreateOrReplaceJob.prototype.createData = function () {
@@ -83,9 +94,45 @@ var CreateOrReplaceJob = (function () {
     CreateOrReplaceJob.prototype.ngOnChanges = function () {
         if (this.create === "slide-modal") {
             if (app_constant_1.default.IS_UPDATE) {
-                this.job = app_constant_1.default.UPDATE_JOB_DATA;
+                this.is_update = true;
+                this.job = Object.assign({}, app_constant_1.default.UPDATE_JOB_DATA);
+                this.job.weeks = this.setWeeks(this.job.jobExeDays);
+                this.job.months = this.setMonths(this.job.jobExeMonths);
+                this.job.jobDateTime = this.job.jobDateTime ? new Date(this.job.jobDateTime.substring(0, this.job.jobDateTime.length - 2)) : "";
+                this.job.jobEndtime = this.job.jobEndtime ? new Date(this.job.jobEndtime.substring(0, this.job.jobEndtime.length - 2)) : "";
             }
         }
+    };
+    CreateOrReplaceJob.prototype.setWeeks = function (days) {
+        var weeks = app_constant_1.default.WEEKS.slice();
+        if (days) {
+            if ((days[0] === '*'))
+                return weeks;
+            else
+                weeks.map(function (obj, idx) {
+                    var index = days.findIndex(function (val) {
+                        return parseInt(val) === (idx + 1);
+                    });
+                    if (index == -1)
+                        obj[Object.keys(obj)[0]] = false;
+                });
+        }
+        return weeks;
+    };
+    CreateOrReplaceJob.prototype.setMonths = function (months) {
+        var tempMonths = app_constant_1.default.MONTHS.slice();
+        if (months)
+            if ((months[0] === '*'))
+                return tempMonths;
+            else
+                tempMonths.map(function (obj, idx) {
+                    var index = months.findIndex(function (val) {
+                        return parseInt(val) === idx;
+                    });
+                    if (index == -1)
+                        obj[Object.keys(obj)[0]] = false;
+                });
+        return tempMonths;
     };
     __decorate([
         core_1.Input(), 

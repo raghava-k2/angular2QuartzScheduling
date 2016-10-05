@@ -9,12 +9,12 @@
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let row of rowData | slice:start:end">
+            <tr *ngFor="let row of rowData | slice:start:end;let i = index;">
                 <td><input type="checkbox" class="checkbox-size" [(ngModel)]="row.checked" (change)="toggleCheck($event)" /></td>
                 <td [innerHTML]="row.id"></td>
                 <td [innerHTML]="row.userName"></td>
                 <td>
-                    <a [innerHTML]="row.jobName" (click)="editJobDetails($event)"></a>
+                    <a [innerHTML]="row.jobName" (click)="editJobDetails(i)"></a>
                 </td>
                 <td [innerHTML]="row.jobGroupName"></td>
                 <td [innerHTML]="row.jobDateTime"></td>

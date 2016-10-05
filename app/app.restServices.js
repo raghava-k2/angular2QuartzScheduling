@@ -34,7 +34,8 @@ var RestServices = (function () {
         return this.http.post(this.url + "/do/deletejobs", body);
     };
     RestServices.prototype.updateJob = function (jobData) {
-        return this.http.post(this.url + "/do/updatejob", jobData);
+        var body = JSON.stringify(jobData);
+        return this.http.post(this.url + "/do/updatejob", body);
     };
     RestServices = __decorate([
         core_1.Injectable(), 

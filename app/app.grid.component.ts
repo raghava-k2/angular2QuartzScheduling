@@ -137,9 +137,9 @@ export class Ng2Grid {
         }
     }
 
-    editJobDetails(event: any) {
+    editJobDetails(obj: number) {
         APPconstants.IS_UPDATE = true;
-        APPconstants.UPDATE_JOB_DATA = event;
-        this.addJobs.emit(event);
+        APPconstants.UPDATE_JOB_DATA = this.rowData[obj];
+        this.addJobs.emit(true);
     }
 }

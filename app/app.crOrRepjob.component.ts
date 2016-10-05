@@ -16,6 +16,7 @@ export class CreateOrReplaceJob {
     @Output() closeModal = new EventEmitter<boolean>();
     private job: any;
     private status: any;
+    private is_update: boolean;
     constructor(private jobService: RestServices) {
         this.job = { glInfo: {} };
         this.job.weeks = APPconstants.WEEKS.slice();
@@ -23,18 +24,21 @@ export class CreateOrReplaceJob {
         this.status = {};
         this.status.show = true;
         this.status.message = "";
+        this.is_update = false;
     }
     goBack(event: any) {
         this.job = { glInfo: {}, weeks: APPconstants.WEEKS.slice(), months: APPconstants.MONTHS.slice() };
         this.status.show = true;
         this.status.message = ""
+        APPconstants.IS_UPDATE = false;
+        this.is_update = false;
         this.closeModal.emit(event);
     }
     createOrUpdateJob() {
         if (!APPconstants.IS_UPDATE)
             this.createNewJob();
         else
-            this.up
+            this.updateJob();
     }
 
     private createNewJob() {
@@ -56,7 +60,14 @@ export class CreateOrReplaceJob {
         this.createData();
         this.jobService.updateJob(this.job).subscribe((response) => {
             let json = response.json();
-            console.log(json);
+            if (json.status === "success") {
+                this.status.show = false;
+                this.status.message = "successfully updated the job : " + this.job.jobName;
+            }
+            else {
+                this.status.show = false;
+                this.status.message = json.msg;
+            }
         });
     }
 
@@ -86,8 +97,45 @@ export class CreateOrReplaceJob {
     ngOnChanges() {
         if (this.create === "slide-modal") {
             if (APPconstants.IS_UPDATE) {
-                this.job = APPconstants.UPDATE_JOB_DATA;
+                this.is_update = true;
+                this.job = Object.assign({}, APPconstants.UPDATE_JOB_DATA);
+                this.job.weeks = this.setWeeks(this.job.jobExeDays);
+                this.job.months = this.setMonths(this.job.jobExeMonths);
+                this.job.jobDateTime = this.job.jobDateTime ? new Date(this.job.jobDateTime.substring(0, this.job.jobDateTime.length - 2)) : "";
+                this.job.jobEndtime = this.job.jobEndtime ? new Date(this.job.jobEndtime.substring(0, this.job.jobEndtime.length - 2)) : "";
             }
         }
+    }
+
+    private setWeeks(days) {
+        let weeks = APPconstants.WEEKS.slice();
+        if (days) {
+            if ((days[0] === '*'))
+                return weeks;
+            else
+                weeks.map(function (obj, idx) {
+                    let index = days.findIndex(function (val) {
+                        return parseInt(val) === (idx + 1);
+                    });
+                    if (index == -1)
+                        obj[Object.keys(obj)[0]] = false;
+                });
+        }
+        return weeks;
+    }
+    private setMonths(months) {
+        let tempMonths = APPconstants.MONTHS.slice();
+        if (months)
+            if ((months[0] === '*'))
+                return tempMonths;
+            else
+                tempMonths.map(function (obj, idx) {
+                    let index = months.findIndex(function (val) {
+                        return parseInt(val) === idx;
+                    });
+                    if (index == -1)
+                        obj[Object.keys(obj)[0]] = false;
+                });
+        return tempMonths;
     }
 }
