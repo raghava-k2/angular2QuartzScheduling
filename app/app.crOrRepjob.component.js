@@ -73,8 +73,13 @@ var CreateOrReplaceJob = (function () {
     CreateOrReplaceJob.prototype.createData = function () {
         this.job.jobExeDays = this.getSelectedDays();
         this.job.jobExeMonths = this.getSelectedMonths();
-        this.job.jobDateTime = this.trimDate(this.job.jobDateTime ? new Date(this.job.jobDateTime) : "");
-        this.job.jobEndtime = this.trimDate(this.job.jobEndtime ? new Date(this.job.jobEndtime) : "");
+        this.job.jobDateTime = this.trimDate(this.job.jobDateTimeTemp ? this.converISODate(this.job.jobDateTimeTemp) : "");
+        this.job.jobEndtime = this.trimDate(this.job.jobEndTimeTemp ? this.converISODate(this.job.jobEndTimeTemp) : "");
+    };
+    CreateOrReplaceJob.prototype.converISODate = function (obj) {
+        var date = new Date(obj);
+        date.setTime(date.getTime() - ((5 * 60 * 60 * 1000) + (1 * 30 * 60 * 1000)));
+        return date;
     };
     CreateOrReplaceJob.prototype.getSelectedDays = function () {
         return this.job.weeks.map(function (obj, idx) {
@@ -98,10 +103,15 @@ var CreateOrReplaceJob = (function () {
                 this.job = Object.assign({}, app_constant_1.default.UPDATE_JOB_DATA);
                 this.job.weeks = this.setWeeks(this.job.jobExeDays);
                 this.job.months = this.setMonths(this.job.jobExeMonths);
-                this.job.jobDateTime = this.job.jobDateTime ? new Date(this.job.jobDateTime.substring(0, this.job.jobDateTime.length - 2)) : "";
-                this.job.jobEndtime = this.job.jobEndtime ? new Date(this.job.jobEndtime.substring(0, this.job.jobEndtime.length - 2)) : "";
+                this.job.jobDateTimeTemp = this.job.jobDateTime ? this.convertToISODate(this.job.jobDateTime) : "";
+                this.job.jobEndTimeTemp = this.job.jobEndtime ? this.convertToISODate(this.job.jobEndtime) : "";
             }
         }
+    };
+    CreateOrReplaceJob.prototype.convertToISODate = function (obj) {
+        var date = new Date(obj);
+        date.setTime(date.getTime() + ((5 * 60 * 60 * 1000) + (1 * 30 * 60 * 1000)));
+        return date.toISOString().slice(0, 16);
     };
     CreateOrReplaceJob.prototype.setWeeks = function (days) {
         var weeks = app_constant_1.default.WEEKS.slice();
