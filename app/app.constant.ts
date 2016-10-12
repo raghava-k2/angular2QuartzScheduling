@@ -46,4 +46,7 @@ export default class APPconstants {
         }];
     static IS_UPDATE: boolean;
     static UPDATE_JOB_DATA: any;
+    static customCopy(obj: any) {
+        return JSON.parse(JSON.stringify(obj));
+    }
 }

@@ -19,15 +19,15 @@ export class CreateOrReplaceJob {
     private is_update: boolean;
     constructor(private jobService: RestServices) {
         this.job = { glInfo: {} };
-        this.job.weeks = APPconstants.WEEKS.slice();
-        this.job.months = APPconstants.MONTHS.slice();
+        this.job.weeks = APPconstants.customCopy(APPconstants.WEEKS);
+        this.job.months = APPconstants.customCopy(APPconstants.MONTHS);
         this.status = {};
         this.status.show = true;
         this.status.message = "";
         this.is_update = false;
     }
     goBack(event: any) {
-        this.job = { glInfo: {}, weeks: APPconstants.WEEKS.slice(), months: APPconstants.MONTHS.slice() };
+        this.job = { glInfo: {}, weeks: APPconstants.customCopy(APPconstants.WEEKS), months: APPconstants.customCopy(APPconstants.MONTHS) };
         this.status.show = true;
         this.status.message = ""
         APPconstants.IS_UPDATE = false;
@@ -85,16 +85,20 @@ export class CreateOrReplaceJob {
     }
 
     private getSelectedDays() {
-        return this.job.weeks.map(function (obj, idx) {
+        let arr = [];
+        this.job.weeks.forEach(function (obj, idx) {
             if (obj[Object.keys(obj)[0]])
-                return (idx + 1);
+                arr.push(idx + 1);
         });
+        return arr;
     }
     private getSelectedMonths() {
-        return this.job.months.map(function (obj, idx) {
+        let arr = [];
+        this.job.months.map(function (obj, idx) {
             if (obj[Object.keys(obj)[0]])
-                return idx;
+                arr.push(idx);
         });
+        return arr;
     }
     private trimDate(obj: any) {
         return obj ? obj.toString().substring(0, obj.toString().lastIndexOf(':') + 3) : '';
@@ -116,11 +120,11 @@ export class CreateOrReplaceJob {
     private convertToISODate(obj: any) {
         let date = new Date(obj);
         date.setTime(date.getTime() + ((5 * 60 * 60 * 1000) + (1 * 30 * 60 * 1000)));
-        return date.toISOString().slice(0,16);
+        return date.toISOString().slice(0, 16);
     }
 
     private setWeeks(days) {
-        let weeks = APPconstants.WEEKS.slice();
+        let weeks = APPconstants.customCopy(APPconstants.WEEKS);
         if (days) {
             if ((days[0] === '*'))
                 return weeks;
@@ -136,7 +140,7 @@ export class CreateOrReplaceJob {
         return weeks;
     }
     private setMonths(months) {
-        let tempMonths = APPconstants.MONTHS.slice();
+        let tempMonths = APPconstants.customCopy(APPconstants.MONTHS);
         if (months)
             if ((months[0] === '*'))
                 return tempMonths;

@@ -19,15 +19,15 @@ var CreateOrReplaceJob = (function () {
         this.jobService = jobService;
         this.closeModal = new core_1.EventEmitter();
         this.job = { glInfo: {} };
-        this.job.weeks = app_constant_1.default.WEEKS.slice();
-        this.job.months = app_constant_1.default.MONTHS.slice();
+        this.job.weeks = app_constant_1.default.customCopy(app_constant_1.default.WEEKS);
+        this.job.months = app_constant_1.default.customCopy(app_constant_1.default.MONTHS);
         this.status = {};
         this.status.show = true;
         this.status.message = "";
         this.is_update = false;
     }
     CreateOrReplaceJob.prototype.goBack = function (event) {
-        this.job = { glInfo: {}, weeks: app_constant_1.default.WEEKS.slice(), months: app_constant_1.default.MONTHS.slice() };
+        this.job = { glInfo: {}, weeks: app_constant_1.default.customCopy(app_constant_1.default.WEEKS), months: app_constant_1.default.customCopy(app_constant_1.default.MONTHS) };
         this.status.show = true;
         this.status.message = "";
         app_constant_1.default.IS_UPDATE = false;
@@ -82,16 +82,20 @@ var CreateOrReplaceJob = (function () {
         return date;
     };
     CreateOrReplaceJob.prototype.getSelectedDays = function () {
-        return this.job.weeks.map(function (obj, idx) {
+        var arr = [];
+        this.job.weeks.forEach(function (obj, idx) {
             if (obj[Object.keys(obj)[0]])
-                return (idx + 1);
+                arr.push(idx + 1);
         });
+        return arr;
     };
     CreateOrReplaceJob.prototype.getSelectedMonths = function () {
-        return this.job.months.map(function (obj, idx) {
+        var arr = [];
+        this.job.months.map(function (obj, idx) {
             if (obj[Object.keys(obj)[0]])
-                return idx;
+                arr.push(idx);
         });
+        return arr;
     };
     CreateOrReplaceJob.prototype.trimDate = function (obj) {
         return obj ? obj.toString().substring(0, obj.toString().lastIndexOf(':') + 3) : '';
@@ -114,7 +118,7 @@ var CreateOrReplaceJob = (function () {
         return date.toISOString().slice(0, 16);
     };
     CreateOrReplaceJob.prototype.setWeeks = function (days) {
-        var weeks = app_constant_1.default.WEEKS.slice();
+        var weeks = app_constant_1.default.customCopy(app_constant_1.default.WEEKS);
         if (days) {
             if ((days[0] === '*'))
                 return weeks;
@@ -130,7 +134,7 @@ var CreateOrReplaceJob = (function () {
         return weeks;
     };
     CreateOrReplaceJob.prototype.setMonths = function (months) {
-        var tempMonths = app_constant_1.default.MONTHS.slice();
+        var tempMonths = app_constant_1.default.customCopy(app_constant_1.default.MONTHS);
         if (months)
             if ((months[0] === '*'))
                 return tempMonths;

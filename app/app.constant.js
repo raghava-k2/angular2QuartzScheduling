@@ -5,6 +5,9 @@
 var APPconstants = (function () {
     function APPconstants() {
     }
+    APPconstants.customCopy = function (obj) {
+        return JSON.parse(JSON.stringify(obj));
+    };
     APPconstants.GRID_HEADERS = ["Id", "User Name", "Job Name", "Job Group Name", "Start Time", "Next Execute Time", "Status"];
     APPconstants.GRID_ROWS_PER_PAGE = [10, 20, 30, 40, 50];
     APPconstants.WEEKS = [{
